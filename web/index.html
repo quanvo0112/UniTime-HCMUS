@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scheduler Web Migration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="app-bg"></div>
+    <main class="app-shell">
+      <header class="app-header">
+        <p class="eyebrow">Scheduler Migration</p>
+        <h1>Course Planner</h1>
+        <p class="subtitle">Browse available courses from JSON and build your personal timetable</p>
+      </header>
+
+      <section class="panel available-panel" aria-labelledby="available-title">
+        <div class="panel-head panel-head-inline">
+          <div>
+            <h2 id="available-title">Available Courses</h2>
+            <p>Loaded from resources/extracted_table.json</p>
+          </div>
+          <input id="availableSearch" class="available-search" type="search" placeholder="Search by code, name, class, location" />
+        </div>
+        <div id="availableCourses" class="available-courses" aria-live="polite"></div>
+      </section>
+
+      <section class="panel selected-panel" aria-labelledby="selected-title">
+        <div class="panel-head panel-head-inline">
+          <div>
+            <h2 id="selected-title">My Schedule</h2>
+            <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+          </div>
+          <div class="panel-actions">
+            <button type="button" id="exportScheduleBtn" class="btn btn-primary">Export as JSON</button>
+            <button type="button" id="importScheduleBtn" class="btn btn-primary">Import from JSON</button>
+            <input type="file" id="importScheduleFile" accept=".json,application/json" style="display: none;" />
+            <button type="button" id="clearScheduleBtn" class="btn btn-ghost">Clear Schedule</button>
+          </div>
+        </div>
+        <ul id="selectedClasses" class="selected-classes"></ul>
+      </section>
+
+      <section class="panel timetable-panel" aria-labelledby="timetable-title">
+        <div class="panel-head panel-head-inline">
+          <div>
+            <h2 id="timetable-title">Weekly Timetable</h2>
+            <p>Monday to Sunday view. Cells will be populated in Step 4.</p>
+          </div>
+          <div id="legend" class="legend"></div>
+        </div>
+        <div id="timetable" class="timetable" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
