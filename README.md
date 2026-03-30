@@ -35,7 +35,10 @@ Requirements:
 Start server:
 
 1. Open terminal at the project root.
-2. Run: node server.js
+2. Run: 
+```bash
+node server.js
+```
 3. Open: http://localhost:8080
 
 The Node server serves:
@@ -51,5 +54,5 @@ Use this Chrome extension to extract open class data from the HCMUS portal: http
 2. Enable Developer Mode
 3. Click Load Unpacked
 4. Download ESTextension, then use Load Unpacked and select its extension folder
-5. On the HCMUS open class page, run the extension extraction
+5. On the HCMUS open class page, run the extension extraction with JSON Format
 6. Save output to resources/extracted_table.json
