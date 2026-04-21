@@ -20,6 +20,11 @@ function showStatus(statusEl, message, tone = "ok") {
   statusEl.classList.add(tone);
 }
 
+function getExportFilename(extension) {
+  const currentDate = new Date().toISOString().split("T")[0];
+  return `unitime-hcmus-schedule-${currentDate}.${extension}`;
+}
+
 function getRandomColorForClass(key) {
   const mapKey = String(key || "");
   const existing = classColorMap.get(mapKey);
@@ -230,6 +235,26 @@ function canAddInDay(schedule, dayOfWeek) {
   return sameDayCount < MAX_CLASSES_PER_DAY;
 }
 
+async function exportTimetableToPNG() {
+  const timetableContainerEl = document.getElementById("timetable-container");
+  if (!timetableContainerEl) {
+    throw new Error("Timetable container not found");
+  }
+
+  if (!window.domtoimage || typeof window.domtoimage.toPng !== "function") {
+    throw new Error("PNG export is unavailable because dom-to-image-more is not loaded");
+  }
+
+  const imageDataUrl = await window.domtoimage.toPng(timetableContainerEl, {
+    bgcolor: "#ffffff",
+  });
+
+  const link = document.createElement("a");
+  link.href = imageDataUrl;
+  link.download = getExportFilename("png");
+  link.click();
+}
+
 
 
 function bootstrapStep3UI() {
@@ -242,6 +267,7 @@ function bootstrapStep3UI() {
   const statusEl = document.getElementById("formStatus");
   const exportBtnEl = document.getElementById("exportScheduleBtn");
   const importBtnEl = document.getElementById("importScheduleBtn");
+  const exportPngBtnEl = document.getElementById("btn-export-png");
   const importFileEl = document.getElementById("importScheduleFile");
   const clearBtnEl = document.getElementById("clearScheduleBtn");
   const availableSearchEl = document.getElementById("availableSearch");
@@ -254,6 +280,7 @@ function bootstrapStep3UI() {
     !statusEl ||
     !exportBtnEl ||
     !importBtnEl ||
+    !exportPngBtnEl ||
     !importFileEl ||
     !clearBtnEl ||
     !availableSearchEl ||
@@ -309,7 +336,7 @@ function bootstrapStep3UI() {
     const jsonString = JSON.stringify(state.schedule, null, 2);
     const blob = new Blob([jsonString], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const filename = `schedule-${new Date().toISOString().split("T")[0]}.json`;
+    const filename = getExportFilename("json");
 
     const link = document.createElement("a");
     link.href = url;
@@ -322,6 +349,15 @@ function bootstrapStep3UI() {
 
   importBtnEl.addEventListener("click", () => {
     importFileEl.click();
+  });
+
+  exportPngBtnEl.addEventListener("click", async () => {
+    try {
+      await exportTimetableToPNG();
+      showStatus(statusEl, "Exported timetable as PNG", "ok");
+    } catch (error) {
+      showStatus(statusEl, error.message || "Failed to export timetable as PNG", "warn");
+    }
   });
 
   importFileEl.addEventListener("change", async () => {

@@ -42,6 +42,7 @@
           <div class="panel-actions">
             <button type="button" id="exportScheduleBtn" class="btn btn-primary">Export as JSON</button>
             <button type="button" id="importScheduleBtn" class="btn btn-primary">Import from JSON</button>
+            <button type="button" id="btn-export-png" class="btn btn-primary">Export as PNG</button>
             <input type="file" id="importScheduleFile" accept=".json,application/json" style="display: none;" />
             <button type="button" id="clearScheduleBtn" class="btn btn-ghost">Clear Schedule</button>
           </div>
@@ -49,7 +50,7 @@
         <div id="selectedClasses" class="selected-classes" aria-live="polite"></div>
       </section>
 
-      <section class="panel timetable-panel" aria-labelledby="timetable-title">
+      <section id="timetable-container" class="panel timetable-panel" aria-labelledby="timetable-title">
         <div class="panel-head panel-head-inline">
           <div>
             <h2 id="timetable-title">Weekly Timetable</h2>
@@ -60,6 +61,7 @@
       </section>
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image-more/3.1.6/dom-to-image-more.min.js"></script>
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
