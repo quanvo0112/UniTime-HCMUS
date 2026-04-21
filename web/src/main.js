@@ -109,6 +109,8 @@ function renderAvailableCourses(listEl) {
       const buttonText = disabled ? "Added" : "Add";
       const periodStart = periodToFloat(item.classSchedule.periodStart);
       const periodEnd = periodToFloat(item.classSchedule.periodEnd);
+      const exerciseGroup = String(item["Nhóm BT"] || "").trim() || "-";
+      const practiceGroup = String(item["Nhóm TH"] || "").trim() || "-";
       const aliasHtml = item.courseAlias
         ? `<div class="available-meta">Alias: ${item.courseAlias}</div>`
         : "";
@@ -121,6 +123,8 @@ function renderAvailableCourses(listEl) {
             <div><strong>${item.courseName}</strong></div>
             ${aliasHtml}
           </td>
+          <td>${exerciseGroup}</td>
+          <td>${practiceGroup}</td>
           <td>T${item.classSchedule.dayOfWeek}</td>
           <td>${periodStart} - ${periodEnd}</td>
           <td>${item.creditCount} TC</td>
@@ -142,6 +146,8 @@ function renderAvailableCourses(listEl) {
           <th>Course</th>
           <th>Class</th>
           <th>Name</th>
+          <th>NHÓM BT</th>
+          <th>NHÓM TH</th>
           <th>Day</th>
           <th>Period</th>
           <th>Credits</th>

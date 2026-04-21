@@ -1,6 +1,6 @@
-# SchedulerHCMUSWebCreate
+# UniTime-HCMUS
 
-SchedulerHCMUSWebCreate is the browser-based version of the original SchedulerRaylibHCMUS project.
+UniTime-HCMUS is the browser-based version of the original SchedulerRaylibHCMUS project.
 It helps HCMUS students browse available courses, build a personal timetable, and manage schedules with JSON import/export.
 
 ## Core Idea
