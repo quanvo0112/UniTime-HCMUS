@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UniTime-HCMUS</title>
+    <script>
+      (function () {
+        try {
+          const storageKey = "unitime-theme";
+          const savedTheme = localStorage.getItem(storageKey);
+          const preferredTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          const theme = savedTheme === "dark" || savedTheme === "light" ? savedTheme : preferredTheme;
+          document.documentElement.dataset.theme = theme;
+        } catch (error) {
+          document.documentElement.dataset.theme = "light";
+        }
+      }());
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,6 +29,10 @@
     <div class="app-bg"></div>
     <main class="app-shell">
       <header class="app-header">
+        <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+          <span class="theme-toggle__icon" aria-hidden="true">☀</span>
+          <span class="theme-toggle__label">Light</span>
+        </button>
         <p class="eyebrow">Scheduler Migration</p>
         <h1>UniTime-HCMUS</h1>
         <p class="subtitle">Browse available courses from JSON and build your personal timetable</p>
@@ -34,15 +51,22 @@
       </section>
 
       <section class="panel selected-panel" aria-labelledby="selected-title">
-        <div class="panel-head panel-head-inline">
+        <div class="panel-head panel-head-inline schedule-panel-head">
           <div>
             <h2 id="selected-title">My Schedule</h2>
             <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
           </div>
           <div class="panel-actions">
-            <button type="button" id="exportScheduleBtn" class="btn btn-primary">Export as JSON</button>
-            <button type="button" id="importScheduleBtn" class="btn btn-primary">Import from JSON</button>
-            <button type="button" id="btn-export-png" class="btn btn-primary">Export as PNG</button>
+            <details class="export-dropdown">
+              <summary class="btn btn-primary export-dropdown-trigger">Export ▾</summary>
+              <div class="export-dropdown-menu" role="menu" aria-label="Export options">
+                <button type="button" id="exportScheduleBtn" class="dropdown-item" role="menuitem">As JSON</button>
+                <button type="button" id="btn-export-png" class="dropdown-item" role="menuitem">As PNG</button>
+              </div>
+            </details>
+            <div class="panel-actions-group">
+              <button type="button" id="importScheduleBtn" class="btn btn-secondary">Import from JSON</button>
+            </div>
             <input type="file" id="importScheduleFile" accept=".json,application/json" style="display: none;" />
             <button type="button" id="clearScheduleBtn" class="btn btn-ghost">Clear Schedule</button>
           </div>
